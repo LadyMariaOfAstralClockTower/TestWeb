@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>注册</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Template by FreeHTML5.co" />
+	<meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive" />
+
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link rel="shortcut icon" href="favicon.ico">
+
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/animate.css">
+	<link rel="stylesheet" href="/css/style.css">
+
+	<!-- Modernizr JS -->
+	<script src="/js/login/modernizr-2.6.2.min.js"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="/js/login/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+	<body class="style-3" background="/img/login-bg.png">
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<ul class="menu">
+						<!--<li><a href="index.html">Style 1</a></li>
+						<li class="active"><a href="index2.html">Style 2</a></li>
+						<li><a href="index3.html">Style 3</a></li>-->
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-md-push-8" style="left:20%">
+
+					<!-- Start Sign In Form -->
+					<form action="/login/regist" method="post" class="fh5co-form animate-box" data-animate-effect="fadeInRight">
+						<h2>Sign Up</h2>
+						<div class="form-group">
+							<!--<div class="alert alert-success" role="alert">Your info has been saved.</div>-->
+						</div>
+						<div class="form-group">
+							<label for="loginid" class="sr-only">loginid</label>
+							<input type="text" class="form-control" id="loginid" name="loginid" placeholder="loginid" autocomplete="off">
+							<span id="nmsg"></span>
+						</div>
+						<!--<div class="form-group">
+							<label for="email" class="sr-only">Email</label>
+							<input type="email" class="form-control" id="email" placeholder="Email" autocomplete="off">
+						</div>-->
+						<div class="form-group">
+							<label for="password" class="sr-only">Password</label>
+							<input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="off">
+						</div>
+						<div class="form-group">
+							<label for="password1" class="sr-only">Re-type Password</label>
+							<input type="password" class="form-control" id="password1" name="password1" placeholder="Re-type Password" autocomplete="off">
+							<span id="pmsg"></span>
+						</div>
+						<div class="form-group">
+							<!--<label for="remember"><input type="checkbox" id="remember"> Remember Me</label>-->
+						</div>
+						<div class="form-group">
+							<p>Already registered? <a href="/login/login">Sign In</a></p>
+						</div>
+						<div class="form-group">
+							<input type="button" value="Sign Up" onclick="doSubmit();" class="btn btn-primary">
+						</div>
+					</form>
+					<!-- END Sign In Form -->
+
+
+				</div>
+			</div>
+			<div class="row" style="padding-top: 60px; clear: both;">
+				<!--<div class="col-md-12 text-center"><p><small>&copy; All Rights Reserved. More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a></small></p></div>-->
+			</div>
+		</div>
+
+	<!-- jQuery -->
+	<script src="/js/login/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="/js/login/bootstrap.min.js"></script>
+	<!-- Placeholder -->
+	<script src="/js/login/jquery.placeholder.min.js"></script>
+	<!-- Waypoints -->
+	<script src="/js/login/jquery.waypoints.min.js"></script>
+	<!-- Main JS -->
+	<script src="/js/login/main.js"></script>
+	<!-- MD5 JS -->
+	<script src="/js/login/MD5.js"></script>
+
+	<script type="text/javascript">
+		$(function () {
+
+			$("input[name='password'],input[name='password1']").blur(function () {
+
+				var p1=$("input[name='password']").val();
+				var p2=$("input[name='password1']").val();
+
+				if(p1!=""&&p2!=""){
+					if(p1==p2){
+						$("#pmsg").text("✔");
+						$("#pmsg").css("color","green");
+					}else{
+						$("#pmsg").text("两次密码不一致！");
+						$("#pmsg").css("color","red");
+					}
+				}
+
+			});
+
+
+			$("input[name='loginid']").blur(function () {
+
+				var loginid=$("input[name='loginid']").val();
+
+				$.ajax({
+					url:"/login/checkLoginid",
+					type:"post",
+					async:false,
+					data:{
+						loginid:loginid
+					},
+					success:function (msg) {
+						if(msg=="1"){
+							$("#nmsg").text("该用户已被注册！");
+							$("#nmsg").css("color","red");
+						}else{
+							$("#nmsg").text("✔");
+							$("#nmsg").css("color","green");
+						}
+					}
+
+				});
+
+			});
+
+		});
+
+		function doSubmit() {
+			if($("#nmsg").text()=="✔"&&$("#pmsg").text()=="✔"){
+				var loginid=$("#loginid").val();
+				var password=$("#password").val();
+				password=hex_md5(password);
+				$.post("/login/gotoRegister?loginid="+loginid+"&password="+password,function (msg) {
+					if(msg=="0"){
+						alert("注册成功！");
+					}else {
+						alert("注册失败！");
+					}
+				});
+			}else{
+				alert("请填写必要信息！");
+			}
+		}
+
+	</script>
+
+	</body>
+</html>
+

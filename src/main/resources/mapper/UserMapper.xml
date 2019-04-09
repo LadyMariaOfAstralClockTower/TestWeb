@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.UserMapper" >
+
+    <resultMap type="User" id="UserInfo">
+        <id column="id" property="id" />
+        <result column="loginid" property="loginid" />
+        <result column="password" property="password" />
+        <result column="name" property="name" />
+    </resultMap>
+
+    <select id="getUserInfo" resultMap="UserInfo">
+        select * from hrmResource
+    </select>
+
+    <select id="getUserInfoById" resultMap="UserInfo" parameterType="Map">
+        select * from hrmResource where id=#{id}
+    </select>
+
+    <select id="checkLogin" resultMap="UserInfo" parameterType="Map">
+        select * from hrmResource where loginid=#{loginid} and password=#{password}
+    </select>
+
+    <select id="checkLoginid" resultMap="UserInfo" parameterType="String">
+        select * from hrmResource where loginid=#{loginid}
+    </select>
+
+    <insert id="register" parameterType="Map">
+        <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">
+            select @@IDENTITY as id
+        </selectKey>
+        insert into hrmresource(loginid,password,name) values(#{loginid},#{password},#{loginid})
+    </insert>
+
+</mapper>
